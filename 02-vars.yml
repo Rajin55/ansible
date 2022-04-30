@@ -26,8 +26,15 @@
   vars_prompt:
     - name: URL
       prompt: Enter URL
-      private: yes
+      private: no
   tasks:
    - name: Print Variable
      debug:
        msg: URL = {{ URL }}
+
+- name: Demo on variabe from inventory
+  hosts: all
+  tasks:
+    - name: Print variable
+      debug:
+        msg: URL ={{ URL }}
