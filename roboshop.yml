@@ -1,5 +1,3 @@
-- name: setup roboshop project
-  hosts: FRONTEND
-  roles:
-    - name: load frontend
-      role: frontend
+- name: Install Nginx
+  yum: nginx
+  state: present
