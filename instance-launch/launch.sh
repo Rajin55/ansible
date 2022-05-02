@@ -2,48 +2,30 @@
 
 COMPONENT=$1
 
-## -z validates the variable empty , true if it is empty.
+# -z validate the variable empty, true if is empty
 if [ -z "${COMPONENT}" ]; then
-  echo "Component Input is Needed"
-  exit 1
+  echo"Component name is needed"
 fi
 
-LID=lt-023c4ed863479eab4
+LID=lt-078d60fb07d6684f7
 LVER=1
 
-## Validate If Instance is already there
-DNS_UPDATE() {
-  PRIVATEIP=$(aws --region us-east-1 ec2 describe-instances --filters "Name=tag:Name,Values=${COMPONENT}"  | jq .Reservations[].Instances[].PrivateIpAddress | xargs -n1)
-  sed -e "s/COMPONENT/${COMPONENT}/" -e "s/IPADDRESS/${PRIVATEIP}/" record.json >/tmp/record.json
-  aws route53 change-resource-record-sets --hosted-zone-id Z0853472YEV9ELZNQML9 --change-batch file:///tmp/record.json | jq
+DNS_UPDATE(){
+ PRIVATEIP=$(aws --region us-east-1 ec2 describe-instances --filters "Name=tag:Name,Values=${COMPONENT}" | jq .Reservations[].Instances[].PrivateIpAddress | xargs -n1 )
+ sed -e "s/COMPONENT/${COMPONENT}/" -e "s/IPADDRESS/${PRIVATEIP}/" record.json >/tmp/record.json
+ aws route53 change-resource-record-sets --hosted-zone-id Z0853472YEV9ELZNQML9 --change-batch file:///tmp/record.json | jq
 }
-
-INSTANCE_CREATE(){
-  INSTANCE_STATE=$(aws --region us-east-1 ec2 describe-instances --filters "Name=tag:Name,Values=${COMPONENT}"  | jq .Reservations[].Instances[].State.Name | xargs -n1)
-  if [ "${INSTANCE_STATE}" = "running" ]; then
-    echo "${COMPONENT} Instance already exists!!"
-    DNS_UPDATE
-    return 0
-  fi
-
-  if [ "${INSTANCE_STATE}" = "stopped" ]; then
-    echo "${COMPONENT} Instance already exists!!"
-    return 0
-  fi
-
-echo -n Instance ${COMPONENT} created - IPADDRESS is
-  aws --region us-east-1 ec2 run-instances --launch-template LaunchTemplateId=${LID},Version=${LVER}  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${COMPONENT}}]" | jq | grep PrivateIpAddress | xargs -n1
-  sleep 10
+INSTANCE_STATE=$(aws --regio us-east-1 ec2 describe-instances --filters "Name=tag:Name,Values=${COMPONENT}" | jq .Reservations[].Instances[].state.Name | xargs -n1 )
+if [ "${INSTANCE_STATE}" = "running" ]; then
+  echo"Instance is already Existed"
   DNS_UPDATE
-}
-if [ "${1}" == "all" ]; then
-  for components in frontend mongodb catalogue redis user cart mysql shipping rabbitmq payment ; do
-  COMPONENT=$components
-  INSTANCE_CREATE
-    done
-    else
-  INSTANCE_CREATE
-  COMPONENT=$1
+  exit 0
 fi
 
+if [ "${INSTANCE_STATE}" = "stop" ]; then
+  echo"Instance is already Existed"
+fi
 
+aws ec2 --regio us-east-1 run-instances --launch-template LaunchTemplateId=${LID},Version=${LVER}  --tag-specifications "ResourceType=instance, Tags=[{Key=Name,Value=${COMPONENT}}]" | jq
+sleep 30
+DNS_UPDATE
