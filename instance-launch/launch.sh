@@ -8,7 +8,7 @@ if [ -z "${COMPONENT}" ]; then
 fi
 
 LID=lt-078d60fb07d6684f7
-LVER=1
+LVER=2
 
 DNS_UPDATE(){
  PRIVATEIP=$(aws --region us-east-1 ec2 describe-instances --filters "Name=tag:Name,Values=${COMPONENT}" | jq .Reservations[].Instances[].PrivateIpAddress | xargs -n1 )
