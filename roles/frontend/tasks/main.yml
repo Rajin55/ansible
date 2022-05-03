@@ -11,7 +11,7 @@
 - name: Extract Packages
   ansible.builtin.unarchive:
     src: https://github.com/roboshop-devops-project/frontend/archive/main.zip
-    dest: /usr/share/nginx/html/
+    dest: /usr/share/nginx
     remote_src: yes
 
 - name: Copy Extract directory
@@ -25,5 +25,3 @@
     state: restarted
     name: nginx
     enabled: yes
-
-
