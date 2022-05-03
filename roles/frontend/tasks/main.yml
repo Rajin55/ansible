@@ -28,7 +28,7 @@
 - name: Start Nginx
   ansible.builtin.systemd:
     become: yes
-    state: restarted
+    state: started
     name: nginx
     enabled: yes
 
