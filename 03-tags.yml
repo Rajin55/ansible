@@ -1,0 +1,10 @@
+- name: Demon on tags
+  hosts: locahost
+  tasks:
+   - name: Print AWS
+     debug:
+       msg:
+
+   - name: Print AZURE
+     debug:
+       msg: AZURE
