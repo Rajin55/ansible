@@ -1,5 +1,5 @@
 - name: Demon on tags
-  hosts: locahost
+  hosts: all
   tasks:
    - name: Print AWS
      debug:
