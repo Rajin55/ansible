@@ -14,4 +14,4 @@
     - mongodb
   roles:
     - name: Load Mongodb Role
-      role: Mongodb
+      role: mongodb
