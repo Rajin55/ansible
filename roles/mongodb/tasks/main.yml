@@ -1,3 +1,9 @@
--name: Print Component
-debug:
-  msg: Component = mongodb
+- name: Add Mingodb repository
+  yum_repository:
+    name: MongoDB Repository
+    description: MongoDB Repository
+    baseurl: https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.2/x86_64/
+    gpgcheck: yes
+    enabled: yes
+    gpgkey: https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mongodb.repo
+    file: mongodb
