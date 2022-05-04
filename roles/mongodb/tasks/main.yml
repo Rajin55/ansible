@@ -7,3 +7,19 @@
     enabled: yes
     gpgkey: https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mongodb.repo
     file: mongodb
+
+- name: Install MongoDB
+  yum:
+    name: mongodb-org
+    state: present
+
+- name: Start MonDB service
+  systemd:
+    name: mongod
+    enabled: yes
+    state: started
+
+- name: Update MongoDB Listen Address
+    path: /etc/mongod.conf
+    regexp: 127.0.0.1
+    replace: 0.0.0.0
