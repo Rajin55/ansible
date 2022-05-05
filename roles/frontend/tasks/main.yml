@@ -4,7 +4,7 @@
     state: latest
 
 - name: Download Packages
-  inclide_role:
+  include_role:
     name: common
     tasks_from: download-from-github
   vars:
