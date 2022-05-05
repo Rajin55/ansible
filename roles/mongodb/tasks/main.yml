@@ -33,9 +33,9 @@
      APP_DIR: /tmp/mongodb-main
      EXTRACT_DIR: /tmp
 
-- name: Load schema
+- name: Run a js file containing MongoDB commands with pseudo-idempotency
   community.mongodb.mongodb_shell:
-    file: /tmp/mongodb-main/{{item}}"
+    file: "/tmp/mongodb-main/{{item}}"
     idempotent: yes
   loop:
     - user.js
