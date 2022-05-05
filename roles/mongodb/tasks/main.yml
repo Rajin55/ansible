@@ -35,7 +35,7 @@
 
 - name: Load schema
   community.mongodb.mongodb_shell:
-    file: ""/tmp/mongodb-main/{{item}}"
+    file: /tmp/mongodb-main/{{item}}"
     idempotent: yes
   loop:
     - user.js
