@@ -1,10 +1,10 @@
-- name: Add Mingodb repository
+- name: Add MongoDB repository
   yum_repository:
     name: MongoDB
     description: MongoDB Repository
     baseurl: https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.2/x86_64/
-    gpgcheck: yes
     enabled: yes
+    gpgcheck: yes
     gpgkey: https://www.mongodb.org/static/pgp/server-4.2.asc
     file: mongodb
 
@@ -14,24 +14,25 @@
     state: present
 
 - name: Update MongoDB Listen Address
-  replace:
+  notify:
+    - Restart MongoDB
+  ansible.builtin.replace:
     path: /etc/mongod.conf
-    regexp: 127.0.0.1
-    replace: 0.0.0.0
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+## Handlers will run at ending of the play
 
-- name: Start MonDB service
+- name: Start MongoDB service
   systemd:
     name: mongod
     enabled: yes
     state: started
 
-- name: Download Packages
-  include_role:
-     name: common
-     tasks_from: download-from-github
-  vars:
-     APP_DIR: /tmp/mongodb-main
-     EXTRACT_DIR: /tmp
+- name: Extract Package
+  ansible.builtin.unarchive:
+    src: https://github.com/roboshop-devops-project/{{COMPONENT}}/archive/main.zip
+    dest: "/tmp"
+    remote_src: yes
 
 - name: Load Schema
   community.mongodb.mongodb_shell:
@@ -40,3 +41,5 @@
   loop:
     - users.js
     - catalogue.js
+
+
