@@ -30,4 +30,4 @@
 - name: Download Nodejs Dependencies
   npm:
     path: /home/roboshop/catalogue
-  become_user: roboshop
+#  become_user: roboshop
