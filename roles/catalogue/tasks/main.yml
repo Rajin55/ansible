@@ -28,6 +28,6 @@
 
 
 - name: Download Nodejs Dependencies
-  community.general.npm:
+  npm:
     path: /home/roboshop/catalogue
   become_user: roboshop
