@@ -5,3 +5,22 @@
       - make
       - gcc-c++
     state: installed
+
+- name: Add Roboshop User
+  ansible.builtin.user:
+    name: roboshop
+    comment: Roboshop Project User
+
+- name: Download Packages
+  include_role:
+    name: common
+    tasks_from: download-from-github
+  vars:
+    APP_DIR: /home/roboshop/catalogue
+    EXTRACT_DIR: /home/roboshop
+
+#- name: Copy Content to actual directory
+#  copy:
+#    src: /home/roboshop/catalogue-main/
+#    dest: /home/roboshop/catalogue/
+#    remote_src: yes
