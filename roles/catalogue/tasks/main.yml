@@ -1,3 +1,7 @@
--name: Print Component
-debug:
-  msg: Component = catalogue
+- name: Install Nodejs
+  yum:
+    name:
+      - nodejs
+      - make
+      - gcc-c++
+    state: installed
