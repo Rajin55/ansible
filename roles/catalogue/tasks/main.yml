@@ -38,7 +38,7 @@
     src: systemd.service
     dest: /etc/systemd/system/catalogue.service
 
-- name: start MongoDB Service
+- name: start Catalogue Service
   systemd:
      name: catalogue
      state: restarted

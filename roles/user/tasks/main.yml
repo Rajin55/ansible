@@ -40,7 +40,7 @@
 
 - name: start user Service
   systemd:
-    name: catalogue
+    name: user
     state: restarted
     enabled: yes
     daemon_reload: yes
