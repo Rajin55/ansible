@@ -27,10 +27,21 @@
   become_user: roboshop
 
 
-- name: Download Nodejs Dependence
-  yum:
-     name:
-       - npm
-     path: /home/roboshop/catalogue
-     state: installed
-  become_user: roboshop
+#- name: Download Nodejs Dependencies
+#  npm:
+#    path: /home/roboshop/catalogue
+#    state: present
+#  become_user: roboshop
+
+- name: Copy Systemd file
+  copy:
+    src: systemd.service
+    dest: /etc/systemd/system/catalogue.service
+
+- name: start MongoDB Service
+  systemd:
+     name: catalogue
+     state: restarted
+     enabled: yes
+     daemon_reload: yes
+
