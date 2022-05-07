@@ -1,3 +1,47 @@
--name: Print Component
-debug:
-  msg: Component = cart
+- name: Install Nodejs
+  yum:
+    name:
+      - nodejs
+      - make
+      - gcc-c++
+    state: installed
+
+- name: Add Roboshop User
+  ansible.builtin.user:
+    name: roboshop
+    comment: Roboshop Project User
+
+- name: Download Packages
+  include_role:
+    name: common
+    tasks_from: download-from-github
+  vars:
+    APP_DIR: /home/roboshop/cart
+    EXTRACT_DIR: /home/roboshop
+
+- name: Copy Content to actual directory
+  copy:
+    src: /home/roboshop/cart-main/
+    dest: /home/roboshop/cart/
+    remote_src: yes
+  become_user: roboshop
+
+
+#- name: Download Nodejs Dependencies
+#  npm:
+#    path: /home/roboshop/catalogue
+#    state: present
+#  become_user: roboshop
+
+#- name: Copy Systemd file
+#  copy:
+ #   src: systemd.service
+ #   dest: /etc/systemd/system/user.service
+
+#- name: start user Service
+#  systemd:
+ #   name: user
+ #   state: restarted
+ #   enabled: yes
+ #   daemon_reload: yes
+
