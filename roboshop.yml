@@ -34,20 +34,3 @@
     - name: Load Redis Role
       role: redis
 
-- name: Setup roboshop project -- User  Component
-  hosts: USER
-  become: yes
-  tags:
-    - user
-  roles:
-    - name: Load User Role
-      role: user
-
-- name: Setup roboshop project -- Cart  Component
-  hosts: CART
-  become: yes
-  tags:
-    - cart
-  roles:
-    - name: Load Cart Role
-      role: cart
