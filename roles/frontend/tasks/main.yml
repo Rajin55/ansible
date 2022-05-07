@@ -18,9 +18,9 @@
     remote_src: yes
 
 - name: Copy Roboshop config
-  copy:    dest: /etc/nginx/default.d/roboshop.conf
-
-             src: roboshop.conf
+  copy:
+    src: roboshop.conf
+    dest: /etc/nginx/default.d/roboshop.conf
 
 - name: Start Nginx
   systemd:
