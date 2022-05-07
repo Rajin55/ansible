@@ -33,15 +33,15 @@
 #    state: present
 #  become_user: roboshop
 
-#- name: Copy Systemd file
- # copy:
-  #  src: systemd.service
-   # dest: /etc/systemd/system/catalogue.service
+- name: Copy Systemd file
+  copy:
+    src: systemd.service
+    dest: /etc/systemd/system/user.service
 
-#- name: start MongoDB Service
- # systemd:
-  #  name: catalogue
-   # state: restarted
-   # enabled: yes
-   # daemon_reload: yes
+- name: start user Service
+  systemd:
+    name: catalogue
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
 
