@@ -1,6 +1,6 @@
-- name: Install Redis Packages to get redis repos
+- name: Install Redis Package to get redis repos.
   yum:
-    name:  http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+    name: http://rpms.remirepo.net/enterprise/remi-release-7.rpm
     state: present
 
 - name: Install Redis
@@ -10,10 +10,10 @@
     enablerepo: "remi"
 
 - name: Update Redis Listen Address
-  replace:
+  ansible.builtin.replace:
     path: /etc/redis.conf
-    regexp: 127.0.0.1
-    replace: 0.0.0.0
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
 
 - name: Start Redis
   systemd:
