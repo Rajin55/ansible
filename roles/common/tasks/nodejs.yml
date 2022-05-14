@@ -16,31 +16,31 @@
     name: common
     tasks_from: download-from-github
   vars:
-    APP_DIR: /home/roboshop/catalogue
+    APP_DIR: /home/roboshop/{{COMPONENT}}
     EXTRACT_DIR: /home/roboshop
 
 - name: Copy Content to actual directory
   copy:
-    src: /home/roboshop/catalogue-main/
-    dest: /home/roboshop/catalogue/
+    src: /home/roboshop/{{COMPONENT}}-main/
+    dest: /home/roboshop/{{COMPONENT}}/
     remote_src: yes
   become_user: roboshop
 
 
 - name: Download Nodejs Dependencies
   npm:
-    path: /home/roboshop/catalogue
+    path: /home/roboshop/{{COMPONENT}}
     state: present
   become_user: roboshop
 
 - name: Copy Systemd file
   copy:
     src: systemd.service
-    dest: /etc/systemd/system/catalogue.service
+    dest: /etc/systemd/system/{{COMPONENT}}.service
 
-- name: start Catalogue Service
+- name: start {{COMPONENT}} Service
   systemd:
-     name: catalogue
+     name: {{COMPONENT}}
      state: restarted
      enabled: yes
      daemon_reload: yes
