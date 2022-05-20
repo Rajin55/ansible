@@ -66,5 +66,5 @@
   tags:
     - shipping
   roles:
-    - name: Load Shiiping Role
+    - name: Load Shipping Role
       role: shipping
