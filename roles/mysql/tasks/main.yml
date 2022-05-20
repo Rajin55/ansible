@@ -25,16 +25,16 @@
     state: started
     enabled: yes
 
-- name: Check mysql login
-  community.mysql.mysql_query:
-   login_user: root
-   login_password: RoboShop@1
-   query: show database
-  register: out
+#- name: Check mysql login
+ # community.mysql.mysql_query:
+  # login_user: root
+  # login_password: RoboShop@1
+  # query: show database
+  #register: out
 
-- name: debug
-  debug:
-    msg: "{{out}}"
+#- name: debug
+ # debug:
+  #  msg: "{{out}}"
 
 - name: Reset Mysql Password
   block:
@@ -50,6 +50,14 @@
     - name: set Mysql password
       shell: mysql --connect-expired-password -u root -p"{{MYSQL_DEFAULT_PASSWORD.stout}}" < /tmp/mysql-pass-reset.sql
   when: out.failed
+
+- name: Download Packages
+  include_role:
+    name: common
+    tasks_from: download-from-github
+  vars:
+    APP_DIR: /tmp/mysql-main
+    EXTRACT_DIR: /tmp
 
 
 
