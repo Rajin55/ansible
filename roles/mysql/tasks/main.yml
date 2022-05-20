@@ -28,9 +28,10 @@
 - name: Check mysql login
   community.mysql.mysql_query:
    login_user: root
-   login_password: D7d3Rs=yYgUw
+   login_password: RoboShop@1
    query: show database
   register: out
+  ignore_errors: yes
 
 - name: debug
   debug:
@@ -49,7 +50,7 @@
 
     - name: set Mysql password
       shell: mysql --connect-expired-password -u root -p"{{MYSQL_DEFAULT_PASSWORD.stout}}" < /tmp/mysql-pass-reset.sql
- # when: out.failed
+  when: out.failed
 
 - name: Download Packages
   include_role:
@@ -58,6 +59,13 @@
   vars:
     APP_DIR: /tmp/mysql-main
     EXTRACT_DIR: /tmp
+
+- name: Load schema
+  community.mysql.mysql_db:
+     state: import
+     name: all
+     targer: /tmp/mysql-main/shipping.sql
+    login_user: root
 
 
 
