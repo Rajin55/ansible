@@ -49,7 +49,7 @@
 
     - name: set Mysql password
       shell: mysql --connect-expired-password -u root -p"{{MYSQL_DEFAULT_PASSWORD.stout}}" < /tmp/mysql-pass-reset.sql
-  when: out.failed
+ # when: out.failed
 
 - name: Download Packages
   include_role:
