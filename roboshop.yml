@@ -51,7 +51,7 @@
     - name: Load Cart Role
       role: cart
 
-- name: Setup roboshop project -- Cart Component
+- name: Setup roboshop project -- Mysql Component
   hosts: MYSQL
   become: yes
   tags:
@@ -59,3 +59,12 @@
   roles:
     - name: Load Mysql Role
       role: mysql
+
+- name: Setup roboshop project -- Shipping Component
+  hosts: SHIPPING
+  become: yes
+  tags:
+    - shipping
+  roles:
+    - name: Load Shiiping Role
+      role: shiiping
