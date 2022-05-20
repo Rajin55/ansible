@@ -66,6 +66,8 @@
      name: all
      targer: /tmp/mysql-main/shipping.sql
     login_user: root
+    login_password: RoboShop@1
+     -
 
 
 
