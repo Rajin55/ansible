@@ -1,3 +1,27 @@
--name: Print Component
-debug:
-  msg: Component = Payment
+- name: Add Mysql repository
+  yum_repository:
+    name: MySQL
+    description: MySQL Repository
+    baseurl: http://repo.mysql.com/yum/mysql-5.7-community/el/7/$basearch/
+    gpgcheck: no
+    enabled: yes
+    file: mysql
+
+- name: Remove MariaDB Libraries
+  yum:
+    name: mariadb-libs
+    state: absent
+
+- name: Install Mysql
+  yum:
+    name: mysql-community-server
+    state: present
+
+- name: Start Mysql service
+  systemd:
+    name: mysqld
+    state: started
+    enabled: yes
+
+#######
+- name:
