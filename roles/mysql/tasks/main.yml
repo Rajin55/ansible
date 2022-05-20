@@ -23,5 +23,31 @@
     state: started
     enabled: yes
 
-#######
-- name:
+- name: Check mysql login
+  community.mysql.mysql_query:
+   login_user: root
+   login_password: RoboShop@1
+   query: show database
+  register: out
+
+- name: debug
+  debug:
+    msg: "{{out}}"
+
+- name: Grabbing Default Passwrd
+  shell: grep "A temporary password" grep temp /var/log/mysqld.log | awk '{print $NF}'
+  register: MYSQL_DEFAULT_PASSWORD
+
+- name: Copy Password reset SQL script
+  çopy:
+    src: mysql-pass-reset.sql
+    dest: /tmp/mysql-pass-reset.sql
+
+- name: set Mysql password
+  shell: mysq --connect-expired-password -u root -p"{{MYSQL_DEFAULT_PASSWORD.stout}}" < /tmp/mysql-pass-reset.sql
+when: out.failed
+
+
+
+
+
