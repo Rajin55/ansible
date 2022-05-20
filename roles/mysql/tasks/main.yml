@@ -34,17 +34,19 @@
   debug:
     msg: "{{out}}"
 
-- name: Grabbing Default Passwrd
-  shell: grep "A temporary password" grep temp /var/log/mysqld.log | awk '{print $NF}'
-  register: MYSQL_DEFAULT_PASSWORD
+- name: Reset Mysql Password
+  block:
+    - name: Grabbing Default Passwrd
+      shell: grep "A temporary password" grep temp /var/log/mysqld.log | awk '{print $NF}'
+      register: MYSQL_DEFAULT_PASSWORD
 
-- name: Copy Password reset SQL script
-  çopy:
-    src: mysql-pass-reset.sql
-    dest: /tmp/mysql-pass-reset.sql
+    - name: Copy Password reset SQL script
+      çopy:
+        src: mysql-pass-reset.sql
+        dest: /tmp/mysql-pass-reset.sql
 
-- name: set Mysql password
-  shell: mysql --connect-expired-password -u root -p"{{MYSQL_DEFAULT_PASSWORD.stout}}" < /tmp/mysql-pass-reset.sql
+    - name: set Mysql password
+      shell: mysql --connect-expired-password -u root -p"{{MYSQL_DEFAULT_PASSWORD.stout}}" < /tmp/mysql-pass-reset.sql
   when: out.failed
 
 
