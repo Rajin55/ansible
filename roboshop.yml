@@ -67,4 +67,4 @@
     - shipping
   roles:
     - name: Load Shiiping Role
-      role: shiiping
+      role: shipping
