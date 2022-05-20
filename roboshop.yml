@@ -50,3 +50,12 @@
   roles:
     - name: Load Cart Role
       role: cart
+
+- name: Setup roboshop project -- Cart Component
+  hosts: MYSQL
+  become: yes
+  tags:
+    - mysql
+  roles:
+    - name: Load Mysql Role
+      role: mysql
