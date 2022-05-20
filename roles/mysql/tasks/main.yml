@@ -65,9 +65,9 @@
      state: import
      name: all
      targer: /tmp/mysql-main/shipping.sql
-    login_user: root
-    login_password: RoboShop@1
-     -
+     login_user: root
+     login_password: RoboShop@1
+
 
 
 
