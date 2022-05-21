@@ -1,21 +1,21 @@
-- name: Install Erlang
+- name: Install ErLang
   yum:
     name: https://github.com/rabbitmq/erlang-rpm/releases/download/v23.2.6/erlang-23.2.6-1.el7.x86_64.rpm
     state: present
 
-- name: Download YLM Repo
-  shell: https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | sudo bash
+- name: Download YUM Repos
+  shell: curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | sudo bash
 
-- name: Install Rabbitmq
+- name: Install RabbitMQ Server
   yum:
     name: rabbitmq-server
     state: present
 
-- name: Start Redis
+- name: Start RabbitMQ Service
   systemd:
-    name: redis
-    enabled: yes
+    name: rabbitmq-server
     state: started
+    enabled: yes
 
 - name: Configure RabbitMQ User
   community.rabbitmq.rabbitmq_user:
@@ -26,7 +26,4 @@
     read_priv: .*
     write_priv: .*
     state: present
-    tags: ["administrator"]
-
-
-
+    tags: administrator
