@@ -11,9 +11,9 @@
     name: rabbitmq-server
     state: present
 
-- name: Start Redis
+- name: Start Rabbitmq
   systemd:
-    name: redis
+    name: rabbitmq-server
     enabled: yes
     state: started
 
